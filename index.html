@@ -1,0 +1,65 @@
+<!--File html per lo scheletro della pagina, creato da Tommaso Nerozzi. -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- ------meta tags ---------- -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- -------------------------- -->
+
+    <link rel="stylesheet" href="stile.css">    <!-- tag link per il file css utilizzato per lo stile-->
+    <script src="script.js" defer></script>     <!-- 
+                                                    tag script per il file js, 
+                                                    attributo "defer" per caricare lo script
+                                                    dopo il caricamento del body.
+                                                 -->
+    <title>Tic Tac Toe JS</title>
+</head>
+
+<body onload="alert('Benvenuto!')">
+   
+
+    <p><h1 align="center"><i>Tic Tac Toe</i></h1></p>
+    <p><h6 align="center">Developed by Tommaso Nerozzi</h6></p>
+    
+
+    <!-- tag div: tag utilizzato come contenitore di oggetti
+        che saranno manipolati dallo script js (tramite l'id)
+        e modificati in stile dal css (tramite la classe)
+    --> 
+    <div class="board" id="board">   
+        <!-- 
+            9 celle per la "board", 
+            l'attributo data-cell le rende facilmente accessibili dallo scipt in JavaScript
+            la classe cell invece serve al css
+        -->
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+    </div>  
+    
+
+    <!-- tramite questo div alla vittoria di un giocatore
+         verrà stampato un testo (che specifica chi ha vinto)
+         e un bottone per giocare ancora
+    -->
+    <div class="messaggio-vincita" id="messaggioVincita">
+        <div data-testo-vittoria></div>
+        <button id="playAgainButton"> Play Again </button>
+        
+    </div>
+
+                    
+</body>
+</html>

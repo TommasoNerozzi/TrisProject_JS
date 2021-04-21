@@ -1,0 +1,225 @@
+/*  File CSS per la modifica dello stile, creato da Tommaso Nerozzi. */
+
+
+
+/*  questa parte semplifica la modifica di "width" e "height": 
+
+    - selezionando tutto ciò che sta prima o dopo un oggetto e 
+    - specificando la grandezza della box tramite "box-sizing"
+*/
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+/*-------------------------------------------*/
+
+
+
+
+/* 
+    selettore "root" dove posso creare 
+    variabili per automatizzare il codice
+*/
+:root{
+    --cell-size: 100px; /* specifico la grandezza delle celle */
+
+    --mark-size: calc(var(--cell-size) * .9); /* calcolo il 90% della grandezza della cella 
+                                                e lo assegno alla grandezza del segno */
+}
+/*-------------------------------------------*/
+
+
+
+
+body{  /* modifico il margine del body */
+    margin: 0;
+}
+/*-------------------------------------------*/
+
+
+
+
+/* stile classe board */
+.board {  
+    /* 
+       "vw" e "vh" sono due unità di misura del css
+       che sono utili per avere un rapporto diretto 
+       con la grandezza della finestra del browser  
+    */
+    width: 100vw;  /*Viewport width */
+    height: 100vh; /*Viewport height */
+    display: grid; /* layout di oggetti dentro la griglia */
+
+    /* sposto al centro la board e tutto ciò al suo interno */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+
+    grid-template-columns: repeat(3, auto); /*divido le celle 3 per colonna*/
+}
+/*-------------------------------------------*/
+
+
+
+
+/* stile classe cell*/
+.cell {
+    width: var(--cell-size); /* passo la variabile inizializzata nella :root */
+    height: var(--cell-size);
+    border: 1px solid black; /*specifico il bordo */
+    display: flex; /* specifico che deve essere mostrata di default */
+
+
+    justify-content: center; 
+    align-items: center;
+
+    position: relative; /* rispetto al segno al suo interno */
+    cursor: pointer; /* il cursore cambia e diventa un pointer ogni volta che passa sopra una cella */
+}
+/* rimuovo il bordo extra */
+/*top*/
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3){
+    border-top: none; /* il bordo in alto delle celle 1, 2, 3 viene eliminato*/
+}
+/*left*/
+.cell:nth-child(3n + 1){
+    border-left: none; /* il bordo sx delle celle a sx viene eliminato */
+}
+/*right*/
+.cell:nth-child(3n + 3){
+    border-right: none; /* il bordo dx delle celle a dx viene eliminato */
+}
+/*bottom*/
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7){
+    border-bottom: none; /* il bordo in basso delle celle 7, 8, 9 viene eliminato */
+}
+/*-------------------------------------------*/
+
+
+
+
+/* controllo cursore se ho già un segno nella cella */
+.cell.x,
+.cell.circle{
+    cursor: not-allowed;
+}
+/*-------------------------------------------*/
+
+
+
+/* colore forme */
+.cell.x::before,
+.cell.x::after{
+    background-color: tomato; /* colore X disegnata */
+}
+.cell.circle::before{
+    background-color: royalblue; /* colore O disegnata */
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    background-color: rgb(255, 154, 136); /* colore X hover */
+}
+
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    background-color: rgb(155, 180, 255); /* colore O hover */
+  }
+
+
+/*-------------------------------------------*/
+
+
+
+
+/* creo la forma "X" */
+.cell.x::before,
+.cell.x::after,
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15); 
+    height: var(--mark-size);
+}
+/*ruoto la stringa che sta prima di 45°*/
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before{
+    transform: rotate(45deg);
+}
+/*ruoto la stringa che sta dopo di 45°*/
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    transform: rotate(-45deg);
+}
+/*-------------------------------------------*/
+
+
+
+/* creo la forma "O"*/
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    
+}
+/*disegno il cerchio più esterno */
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before{
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+/*disegno il cerchio più interno */
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size)* .7);
+    background-color: white;
+}
+/*-------------------------------------------*/
+
+
+
+
+/* stile messaggio vincita */
+.messaggio-vincita{
+    display: none; /*non lo stampo di default*/
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* setto gli rgb e la trasparenza*/
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+/*-------------------------------------------*/
+/* stile bottone */
+.messaggio-vincita button{
+    font-size: 2rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+/* stile del bottone se il cursore */
+.messaggio-vincita button:hover{ 
+    background-color: green;
+    color: white;
+    border-color: white;
+}
+/*-------------------------------------------*/
+.messaggio-vincita.show{
+    display: flex; /*stampa del messaggio*/
+}
+/*-------------------------------------------*/

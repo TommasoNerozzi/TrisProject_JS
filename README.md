@@ -4,3 +4,4 @@ There are three files:
 ・the "index.html" file for the skeleton of the page.
 ・the "script.js" file for the game logic.
 ・the "stile.css" for the style of the object used in my "index.html" file.
+//quest amodifica è stata effettuata in locale su Xcode stando lontano da GitHub.
